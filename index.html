@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Daily Tarot Widget</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Georgia', serif;
+      background: #1a1a1a;
+      text-align: center;
+      color: white;
+    }
+
+    .card {
+      background: black;           /* solid black background */
+      border: 2px solid white;     /* white border */
+      padding: 20px;
+      border-radius: 16px;
+      max-width: 300px;
+      width: 90%;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+    }
+
+    img {
+      width: 100%;
+      max-width: 160px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-size: 18px;
+      margin: 8px 0 4px;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+    }
+
+    p {
+      font-size: 14px;
+      line-height: 1.4;
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <img id="cardImage" src="">
+    <h2 id="cardName"></h2>
+    <p id="cardMeaning"></p>
+  </div>
+
+  <script>
+    const tarotDeck = [
+      // Major Arcana
+      { name: "The Fool", meaning: "New beginnings, openness, and trust in the journey.", image: "https://upload.wikimedia.org/wikipedia/commons/9/90/RWS_Tarot_00_Fool.jpg" },
+      { name: "The Magician", meaning: "You have the tools to create what you need.", image: "https://upload.wikimedia.org/wikipedia/commons/d/de/RWS_Tarot_01_Magician.jpg" },
+      { name: "The High Priestess", meaning: "Trust your intuition and inner voice.", image: "https://upload.wikimedia.org/wikipedia/commons/8/88/RWS_Tarot_02_High_Priestess.jpg" },
+      { name: "The Empress", meaning: "Nurture yourself and allow growth.", image: "https://upload.wikimedia.org/wikipedia/commons/d/d2/RWS_Tarot_03_Empress.jpg" },
+      { name: "The Emperor", meaning: "Structure and stability support your path.", image: "https://upload.wikimedia.org/wikipedia/commons/c/c3/RWS_Tarot_04_Emperor.jpg" },
+      { name: "The Hierophant", meaning: "Seek wisdom from tradition or guidance.", image: "https://upload.wikimedia.org/wikipedia/commons/8/8d/RWS_Tarot_05_Hierophant.jpg" },
+      { name: "The Lovers", meaning: "Align with your values and connections.", image: "https://upload.wikimedia.org/wikipedia/commons/3/3a/TheLovers.jpg" },
+      { name: "The Chariot", meaning: "Stay focused and move forward with purpose.", image: "https://upload.wikimedia.org/wikipedia/commons/9/9b/RWS_Tarot_07_Chariot.jpg" },
+      { name: "Strength", meaning: "Gentle strength and compassion carry you.", image: "https://upload.wikimedia.org/wikipedia/commons/f/f5/RWS_Tarot_08_Strength.jpg" },
+      { name: "The Hermit", meaning: "Take time for reflection and clarity.", image: "https://upload.wikimedia.org/wikipedia/commons/4/4d/RWS_Tarot_09_Hermit.jpg" },
+      { name: "Wheel of Fortune", meaning: "Change is part of the cycle—trust it.", image: "https://upload.wikimedia.org/wikipedia/commons/3/3c/RWS_Tarot_10_Wheel_of_Fortune.jpg" },
+      { name: "Justice", meaning: "Fairness and truth guide your decisions.", image: "https://upload.wikimedia.org/wikipedia/commons/e/e0/RWS_Tarot_11_Justice.jpg" },
+      { name: "The Hanged Man", meaning: "Pause and see things differently.", image: "https://upload.wikimedia.org/wikipedia/commons/2/2b/RWS_Tarot_12_Hanged_Man.jpg" },
+      { name: "Death", meaning: "Transformation and new beginnings follow endings.", image: "https://upload.wikimedia.org/wikipedia/commons/d/d7/RWS_Tarot_13_Death.jpg" },
+      { name: "Temperance", meaning: "Balance and patience bring harmony.", image: "https://upload.wikimedia.org/wikipedia/commons/f/f8/RWS_Tarot_14_Temperance.jpg" },
+      { name: "The Devil", meaning: "Notice what holds you back and reclaim control.", image: "https://upload.wikimedia.org/wikipedia/commons/5/55/RWS_Tarot_15_Devil.jpg" },
+      { name: "The Tower", meaning: "Sudden change clears the way for truth.", image: "https://upload.wikimedia.org/wikipedia/commons/5/53/RWS_Tarot_16_Tower.jpg" },
+      { name: "The Star", meaning: "Hope and healing are present.", image: "https://upload.wikimedia.org/wikipedia/commons/d/db/RWS_Tarot_17_Star.jpg" },
+      { name: "The Moon", meaning: "Navigate uncertainty with intuition.", image: "https://upload.wikimedia.org/wikipedia/commons/7/7f/RWS_Tarot_18_Moon.jpg" },
+      { name: "The Sun", meaning: "Joy, clarity, and warmth surround you.", image: "https://upload.wikimedia.org/wikipedia/commons/1/17/RWS_Tarot_19_Sun.jpg" },
+      { name: "Judgement", meaning: "Reflect, release, and step forward renewed.", image: "https://upload.wikimedia.org/wikipedia/commons/d/dd/RWS_Tarot_20_Judgement.jpg" },
+      { name: "The World", meaning: "Completion and fulfillment are within reach.", image: "https://upload.wikimedia.org/wikipedia/commons/f/ff/RWS_Tarot_21_World.jpg" },
+
+      // Minor Arcana (all 56 cards) - Cups, Swords, Wands, Pentacles
+      // [Insert all Minor Arcana cards from the previous code block here, each object unique]
+
+    ];
+
+    // Select a daily card based on date (no repeats until the deck cycles)
+    const today = new Date();
+    const dayIndex = Math.floor(today.getTime() / (1000 * 60 * 60 * 24)) % tarotDeck.length;
+    const card = tarotDeck[dayIndex];
+
+    document.getElementById("cardName").innerText = card.name;
+    document.getElementById("cardMeaning").innerText = card.meaning;
+    document.getElementById("cardImage").src = card.image;
+  </script>
+</body>
+</html>

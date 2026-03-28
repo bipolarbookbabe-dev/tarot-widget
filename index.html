@@ -1,97 +1,159 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Daily Tarot Widget</title>
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Georgia', serif;
-      background: #1a1a1a;
-      text-align: center;
-      color: white;
-    }
+<meta charset="UTF-8">
+<title>Daily Tarot Widget</title>
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #1a1a1a;
+    font-family: 'Georgia', serif;
+    color: white;
+    text-align: center;
+  }
 
-    .card {
-      background: black;           /* solid black background */
-      border: 2px solid white;     /* white border */
-      padding: 20px;
-      border-radius: 16px;
-      max-width: 300px;
-      width: 90%;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.5);
-    }
+  .card {
+    background: black;
+    border: 2px solid white;
+    padding: 20px;
+    border-radius: 16px;
+    max-width: 300px;
+    width: 90%;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+  }
 
-    img {
-      width: 100%;
-      max-width: 160px;
-      border-radius: 8px;
-      margin-bottom: 12px;
-    }
+  img {
+    width: 100%;
+    max-width: 160px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+  }
 
-    h2 {
-      font-size: 18px;
-      margin: 8px 0 4px;
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
-    }
+  h2 {
+    font-size: 18px;
+    margin: 8px 0 4px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+  }
 
-    p {
-      font-size: 14px;
-      line-height: 1.4;
-      opacity: 0.9;
-    }
-  </style>
+  p {
+    font-size: 14px;
+    line-height: 1.4;
+    opacity: 0.9;
+  }
+</style>
 </head>
 <body>
-  <div class="card">
-    <img id="cardImage" src="">
-    <h2 id="cardName"></h2>
-    <p id="cardMeaning"></p>
-  </div>
 
-  <script>
-    const tarotDeck = [
-      // Major Arcana
-      { name: "The Fool", meaning: "New beginnings, openness, and trust in the journey.", image: "https://upload.wikimedia.org/wikipedia/commons/9/90/RWS_Tarot_00_Fool.jpg" },
-      { name: "The Magician", meaning: "You have the tools to create what you need.", image: "https://upload.wikimedia.org/wikipedia/commons/d/de/RWS_Tarot_01_Magician.jpg" },
-      { name: "The High Priestess", meaning: "Trust your intuition and inner voice.", image: "https://upload.wikimedia.org/wikipedia/commons/8/88/RWS_Tarot_02_High_Priestess.jpg" },
-      { name: "The Empress", meaning: "Nurture yourself and allow growth.", image: "https://upload.wikimedia.org/wikipedia/commons/d/d2/RWS_Tarot_03_Empress.jpg" },
-      { name: "The Emperor", meaning: "Structure and stability support your path.", image: "https://upload.wikimedia.org/wikipedia/commons/c/c3/RWS_Tarot_04_Emperor.jpg" },
-      { name: "The Hierophant", meaning: "Seek wisdom from tradition or guidance.", image: "https://upload.wikimedia.org/wikipedia/commons/8/8d/RWS_Tarot_05_Hierophant.jpg" },
-      { name: "The Lovers", meaning: "Align with your values and connections.", image: "https://upload.wikimedia.org/wikipedia/commons/3/3a/TheLovers.jpg" },
-      { name: "The Chariot", meaning: "Stay focused and move forward with purpose.", image: "https://upload.wikimedia.org/wikipedia/commons/9/9b/RWS_Tarot_07_Chariot.jpg" },
-      { name: "Strength", meaning: "Gentle strength and compassion carry you.", image: "https://upload.wikimedia.org/wikipedia/commons/f/f5/RWS_Tarot_08_Strength.jpg" },
-      { name: "The Hermit", meaning: "Take time for reflection and clarity.", image: "https://upload.wikimedia.org/wikipedia/commons/4/4d/RWS_Tarot_09_Hermit.jpg" },
-      { name: "Wheel of Fortune", meaning: "Change is part of the cycle—trust it.", image: "https://upload.wikimedia.org/wikipedia/commons/3/3c/RWS_Tarot_10_Wheel_of_Fortune.jpg" },
-      { name: "Justice", meaning: "Fairness and truth guide your decisions.", image: "https://upload.wikimedia.org/wikipedia/commons/e/e0/RWS_Tarot_11_Justice.jpg" },
-      { name: "The Hanged Man", meaning: "Pause and see things differently.", image: "https://upload.wikimedia.org/wikipedia/commons/2/2b/RWS_Tarot_12_Hanged_Man.jpg" },
-      { name: "Death", meaning: "Transformation and new beginnings follow endings.", image: "https://upload.wikimedia.org/wikipedia/commons/d/d7/RWS_Tarot_13_Death.jpg" },
-      { name: "Temperance", meaning: "Balance and patience bring harmony.", image: "https://upload.wikimedia.org/wikipedia/commons/f/f8/RWS_Tarot_14_Temperance.jpg" },
-      { name: "The Devil", meaning: "Notice what holds you back and reclaim control.", image: "https://upload.wikimedia.org/wikipedia/commons/5/55/RWS_Tarot_15_Devil.jpg" },
-      { name: "The Tower", meaning: "Sudden change clears the way for truth.", image: "https://upload.wikimedia.org/wikipedia/commons/5/53/RWS_Tarot_16_Tower.jpg" },
-      { name: "The Star", meaning: "Hope and healing are present.", image: "https://upload.wikimedia.org/wikipedia/commons/d/db/RWS_Tarot_17_Star.jpg" },
-      { name: "The Moon", meaning: "Navigate uncertainty with intuition.", image: "https://upload.wikimedia.org/wikipedia/commons/7/7f/RWS_Tarot_18_Moon.jpg" },
-      { name: "The Sun", meaning: "Joy, clarity, and warmth surround you.", image: "https://upload.wikimedia.org/wikipedia/commons/1/17/RWS_Tarot_19_Sun.jpg" },
-      { name: "Judgement", meaning: "Reflect, release, and step forward renewed.", image: "https://upload.wikimedia.org/wikipedia/commons/d/dd/RWS_Tarot_20_Judgement.jpg" },
-      { name: "The World", meaning: "Completion and fulfillment are within reach.", image: "https://upload.wikimedia.org/wikipedia/commons/f/ff/RWS_Tarot_21_World.jpg" },
+<div class="card">
+  <img id="cardImage" src="">
+  <h2 id="cardName"></h2>
+  <p id="cardMeaning"></p>
+</div>
 
-      // Minor Arcana (all 56 cards) - Cups, Swords, Wands, Pentacles
-      // [Insert all Minor Arcana cards from the previous code block here, each object unique]
+<script>
+const tarotDeck = [
+  // Major Arcana (22 cards)
+  {name: "The Fool", meaning: "New beginnings, openness, and trust in the journey.", image: "https://upload.wikimedia.org/wikipedia/commons/9/90/RWS_Tarot_00_Fool.jpg"},
+  {name: "The Magician", meaning: "You have the tools to create what you need.", image: "https://upload.wikimedia.org/wikipedia/commons/d/de/RWS_Tarot_01_Magician.jpg"},
+  {name: "The High Priestess", meaning: "Trust your intuition and inner voice.", image: "https://upload.wikimedia.org/wikipedia/commons/8/88/RWS_Tarot_02_High_Priestess.jpg"},
+  {name: "The Empress", meaning: "Nurture yourself and allow growth.", image: "https://upload.wikimedia.org/wikipedia/commons/d/d2/RWS_Tarot_03_Empress.jpg"},
+  {name: "The Emperor", meaning: "Structure and stability support your path.", image: "https://upload.wikimedia.org/wikipedia/commons/c/c3/RWS_Tarot_04_Emperor.jpg"},
+  {name: "The Hierophant", meaning: "Seek wisdom from tradition or guidance.", image: "https://upload.wikimedia.org/wikipedia/commons/8/8d/RWS_Tarot_05_Hierophant.jpg"},
+  {name: "The Lovers", meaning: "Align with your values and connections.", image: "https://upload.wikimedia.org/wikipedia/commons/3/3a/TheLovers.jpg"},
+  {name: "The Chariot", meaning: "Stay focused and move forward with purpose.", image: "https://upload.wikimedia.org/wikipedia/commons/9/9b/RWS_Tarot_07_Chariot.jpg"},
+  {name: "Strength", meaning: "Gentle strength and compassion carry you.", image: "https://upload.wikimedia.org/wikipedia/commons/f/f5/RWS_Tarot_08_Strength.jpg"},
+  {name: "The Hermit", meaning: "Take time for reflection and clarity.", image: "https://upload.wikimedia.org/wikipedia/commons/4/4d/RWS_Tarot_09_Hermit.jpg"},
+  {name: "Wheel of Fortune", meaning: "Change is part of the cycle—trust it.", image: "https://upload.wikimedia.org/wikipedia/commons/3/3c/RWS_Tarot_10_Wheel_of_Fortune.jpg"},
+  {name: "Justice", meaning: "Fairness and truth guide your decisions.", image: "https://upload.wikimedia.org/wikipedia/commons/e/e0/RWS_Tarot_11_Justice.jpg"},
+  {name: "The Hanged Man", meaning: "Pause and see things differently.", image: "https://upload.wikimedia.org/wikipedia/commons/2/2b/RWS_Tarot_12_Hanged_Man.jpg"},
+  {name: "Death", meaning: "Transformation and new beginnings follow endings.", image: "https://upload.wikimedia.org/wikipedia/commons/d/d7/RWS_Tarot_13_Death.jpg"},
+  {name: "Temperance", meaning: "Balance and patience bring harmony.", image: "https://upload.wikimedia.org/wikipedia/commons/f/f8/RWS_Tarot_14_Temperance.jpg"},
+  {name: "The Devil", meaning: "Notice what holds you back and reclaim control.", image: "https://upload.wikimedia.org/wikipedia/commons/5/55/RWS_Tarot_15_Devil.jpg"},
+  {name: "The Tower", meaning: "Sudden change clears the way for truth.", image: "https://upload.wikimedia.org/wikipedia/commons/5/53/RWS_Tarot_16_Tower.jpg"},
+  {name: "The Star", meaning: "Hope and healing are present.", image: "https://upload.wikimedia.org/wikipedia/commons/d/db/RWS_Tarot_17_Star.jpg"},
+  {name: "The Moon", meaning: "Navigate uncertainty with intuition.", image: "https://upload.wikimedia.org/wikipedia/commons/7/7f/RWS_Tarot_18_Moon.jpg"},
+  {name: "The Sun", meaning: "Joy, clarity, and warmth surround you.", image: "https://upload.wikimedia.org/wikipedia/commons/1/17/RWS_Tarot_19_Sun.jpg"},
+  {name: "Judgement", meaning: "Reflect, release, and step forward renewed.", image: "https://upload.wikimedia.org/wikipedia/commons/d/dd/RWS_Tarot_20_Judgement.jpg"},
+  {name: "The World", meaning: "Completion and fulfillment are within reach.", image: "https://upload.wikimedia.org/wikipedia/commons/f/ff/RWS_Tarot_21_World.jpg"},
 
-    ];
+  // Minor Arcana – Cups
+  {name: "Ace of Cups", meaning: "New emotional beginnings, love and intuition.", image: "https://upload.wikimedia.org/wikipedia/commons/2/25/Ace_of_Cups.jpg"},
+  {name: "Two of Cups", meaning: "Partnerships, harmony, and connection.", image: "https://upload.wikimedia.org/wikipedia/commons/f/f5/2_of_Cups.jpg"},
+  {name: "Three of Cups", meaning: "Celebration and friendship.", image: "https://upload.wikimedia.org/wikipedia/commons/4/42/3_of_Cups.jpg"},
+  {name: "Four of Cups", meaning: "Reflection, apathy, and reevaluation.", image: "https://upload.wikimedia.org/wikipedia/commons/9/96/4_of_Cups.jpg"},
+  {name: "Five of Cups", meaning: "Loss, grief, and focusing on what remains.", image: "https://upload.wikimedia.org/wikipedia/commons/5/5f/5_of_Cups.jpg"},
+  {name: "Six of Cups", meaning: "Nostalgia and memories from the past.", image: "https://upload.wikimedia.org/wikipedia/commons/e/eb/6_of_Cups.jpg"},
+  {name: "Seven of Cups", meaning: "Choices, illusions, and imagination.", image: "https://upload.wikimedia.org/wikipedia/commons/7/7f/7_of_Cups.jpg"},
+  {name: "Eight of Cups", meaning: "Walking away, seeking deeper meaning.", image: "https://upload.wikimedia.org/wikipedia/commons/1/19/8_of_Cups.jpg"},
+  {name: "Nine of Cups", meaning: "Contentment and wishes fulfilled.", image: "https://upload.wikimedia.org/wikipedia/commons/2/2f/9_of_Cups.jpg"},
+  {name: "Ten of Cups", meaning: "Emotional fulfillment and family happiness.", image: "https://upload.wikimedia.org/wikipedia/commons/f/f0/10_of_Cups.jpg"},
+  {name: "Page of Cups", meaning: "Curiosity, creative beginnings.", image: "https://upload.wikimedia.org/wikipedia/commons/4/44/Page_of_Cups.jpg"},
+  {name: "Knight of Cups", meaning: "Romantic proposals, pursuit of dreams.", image: "https://upload.wikimedia.org/wikipedia/commons/f/f6/Knight_of_Cups.jpg"},
+  {name: "Queen of Cups", meaning: "Compassion and emotional wisdom.", image: "https://upload.wikimedia.org/wikipedia/commons/8/88/Queen_of_Cups.jpg"},
+  {name: "King of Cups", meaning: "Emotional balance and diplomacy.", image: "https://upload.wikimedia.org/wikipedia/commons/5/5b/King_of_Cups.jpg"},
 
-    // Select a daily card based on date (no repeats until the deck cycles)
-    const today = new Date();
-    const dayIndex = Math.floor(today.getTime() / (1000 * 60 * 60 * 24)) % tarotDeck.length;
-    const card = tarotDeck[dayIndex];
+  // Minor Arcana – Swords
+  {name: "Ace of Swords", meaning: "New ideas, clarity, and truth.", image: "https://upload.wikimedia.org/wikipedia/commons/8/82/Ace_of_Swords.jpg"},
+  {name: "Two of Swords", meaning: "Choices and indecision.", image: "https://upload.wikimedia.org/wikipedia/commons/1/11/2_of_Swords.jpg"},
+  {name: "Three of Swords", meaning: "Heartbreak and sorrow.", image: "https://upload.wikimedia.org/wikipedia/commons/6/63/3_of_Swords.jpg"},
+  {name: "Four of Swords", meaning: "Rest and recovery.", image: "https://upload.wikimedia.org/wikipedia/commons/f/f2/4_of_Swords.jpg"},
+  {name: "Five of Swords", meaning: "Conflict and tension.", image: "https://upload.wikimedia.org/wikipedia/commons/2/2f/5_of_Swords.jpg"},
+  {name: "Six of Swords", meaning: "Transition and moving forward.", image: "https://upload.wikimedia.org/wikipedia/commons/d/d6/6_of_Swords.jpg"},
+  {name: "Seven of Swords", meaning: "Strategy and cunning.", image: "https://upload.wikimedia.org/wikipedia/commons/2/2d/7_of_Swords.jpg"},
+  {name: "Eight of Swords", meaning: "Feeling trapped or restricted.", image: "https://upload.wikimedia.org/wikipedia/commons/8/88/8_of_Swords.jpg"},
+  {name: "Nine of Swords", meaning: "Anxiety and worry.", image: "https://upload.wikimedia.org/wikipedia/commons/0/0b/9_of_Swords.jpg"},
+  {name: "Ten of Swords", meaning: "Endings and release.", image: "https://upload.wikimedia.org/wikipedia/commons/5/55/10_of_Swords.jpg"},
+  {name: "Page of Swords", meaning: "Curiosity and vigilance.", image: "https://upload.wikimedia.org/wikipedia/commons/4/46/Page_of_Swords.jpg"},
+  {name: "Knight of Swords", meaning: "Action and assertiveness.", image: "https://upload.wikimedia.org/wikipedia/commons/f/f4/Knight_of_Swords.jpg"},
+  {name: "Queen of Swords", meaning: "Intelligence and clear communication.", image: "https://upload.wikimedia.org/wikipedia/commons/1/18/Queen_of_Swords.jpg"},
+  {name: "King of Swords", meaning: "Authority and strategic thinking.", image: "https://upload.wikimedia.org/wikipedia/commons/f/f1/King_of_Swords.jpg"},
 
-    document.getElementById("cardName").innerText = card.name;
-    document.getElementById("cardMeaning").innerText = card.meaning;
-    document.getElementById("cardImage").src = card.image;
-  </script>
+  // Minor Arcana – Wands
+  {name: "Ace of Wands", meaning: "New inspiration, creativity, and opportunity.", image: "https://upload.wikimedia.org/wikipedia/commons/0/0b/Ace_of_Wands.jpg"},
+  {name: "Two of Wands", meaning: "Planning and foresight.", image: "https://upload.wikimedia.org/wikipedia/commons/1/1b/2_of_Wands.jpg"},
+  {name: "Three of Wands", meaning: "Expansion and growth.", image: "https://upload.wikimedia.org/wikipedia/commons/3/30/3_of_Wands.jpg"},
+  {name: "Four of Wands", meaning: "Celebration and harmony.", image: "https://upload.wikimedia.org/wikipedia/commons/9/94/4_of_Wands.jpg"},
+  {name: "Five of Wands", meaning: "Competition and challenges.", image: "https://upload.wikimedia.org/wikipedia/commons/f/f4/5_of_Wands.jpg"},
+  {name: "Six of Wands", meaning: "Victory and recognition.", image: "https://upload.wikimedia.org/wikipedia/commons/1/19/6_of_Wands.jpg"},
+  {name: "Seven of Wands", meaning: "Standing your ground.", image: "https://upload.wikimedia.org/wikipedia/commons/7/77/7_of_Wands.jpg"},
+  {name: "Eight of Wands", meaning: "Swift action and progress.", image: "https://upload.wikimedia.org/wikipedia/commons/3/3b/8_of_Wands.jpg"},
+  {name: "Nine of Wands", meaning: "Persistence and resilience.", image: "https://upload.wikimedia.org/wikipedia/commons/0/0a/9_of_Wands.jpg"},
+  {name: "Ten of Wands", meaning: "Responsibility and burden.", image: "https://upload.wikimedia.org/wikipedia/commons/5/53/10_of_Wands.jpg"},
+  {name: "Page of Wands", meaning: "Exploration and discovery.", image: "https://upload.wikimedia.org/wikipedia/commons/f/f7/Page_of_Wands.jpg"},
+  {name: "Knight of Wands", meaning: "Adventure and courage.", image: "https://upload.wikimedia.org/wikipedia/commons/0/0a/Knight_of_Wands.jpg"},
+  {name: "Queen of Wands", meaning: "Confidence and determination.", image: "https://upload.wikimedia.org/wikipedia/commons/5/5f/Queen_of_Wands.jpg"},
+  {name: "King of Wands", meaning: "Leadership and vision.", image: "https://upload.wikimedia.org/wikipedia/commons/0/06/King_of_Wands.jpg"},
+
+  // Minor Arcana – Pentacles
+  {name: "Ace of Pentacles", meaning: "New financial or material opportunity.", image: "https://upload.wikimedia.org/wikipedia/commons/5/50/Ace_of_Pentacles.jpg"},
+  {name: "Two of Pentacles", meaning: "Balance and adaptability.", image: "https://upload.wikimedia.org/wikipedia/commons/0/0a/2_of_Pentacles.jpg"},
+  {name: "Three of Pentacles", meaning: "Collaboration and skill.", image: "https://upload.wikimedia.org/wikipedia/commons/f/fd/3_of_Pentacles.jpg"},
+  {name: "Four of Pentacles", meaning: "Security and holding on.", image: "https://upload.wikimedia.org/wikipedia/commons/0/0c/4_of_Pentacles.jpg"},
+  {name: "Five of Pentacles", meaning: "Loss or financial hardship.", image: "https://upload.wikimedia.org/wikipedia/commons/3/30/5_of_Pentacles.jpg"},
+  {name: "Six of Pentacles", meaning: "Generosity and sharing.", image: "https://upload.wikimedia.org/wikipedia/commons/3/35/6_of_Pentacles.jpg"},
+  {name: "Seven of Pentacles", meaning: "Assessment and patience.", image: "https://upload.wikimedia.org/wikipedia/commons/2/21/7_of_Pentacles.jpg"},
+  {name: "Eight of Pentacles", meaning: "Learning and mastery.", image: "https://upload.wikimedia.org/wikipedia/commons/5/5d/8_of_Pentacles.jpg"},
+  {name: "Nine of Pentacles", meaning: "Self-sufficiency and luxury.", image: "https://upload.wikimedia.org/wikipedia/commons/4/49/9_of_Pentacles.jpg"},
+  {name: "Ten of Pentacles", meaning: "Family, legacy, and wealth.", image: "https://upload.wikimedia.org/wikipedia/commons/1/10/10_of_Pentacles.jpg"},
+  {name: "Page of Pentacles", meaning: "New study or opportunity.", image: "https://upload.wikimedia.org/wikipedia/commons/1/17/Page_of_Pentacles.jpg"},
+  {name: "Knight of Pentacles", meaning: "Diligence and responsibility.", image: "https://upload.wikimedia.org/wikipedia/commons/0/01/Knight_of_Pentacles.jpg"},
+  {name: "Queen of Pentacles", meaning: "Nurturing and practicality.", image: "https://upload.wikimedia.org/wikipedia/commons/c/c0/Queen_of_Pentacles.jpg"},
+  {name: "King of Pentacles", meaning: "Success and stability.", image: "https://upload.wikimedia.org/wikipedia/commons/8/85/King_of_Pentacles.jpg"}
+];
+
+// Get today's card
+const today = new Date();
+const dayIndex = Math.floor(today.getTime() / (1000*60*60*24)) % tarotDeck.length;
+const card = tarotDeck[dayIndex];
+
+document.getElementById("cardName").innerText = card.name;
+document.getElementById("cardMeaning").innerText = card.meaning;
+document.getElementById("cardImage").src = card.image;
+</script>
+
 </body>
 </html>
